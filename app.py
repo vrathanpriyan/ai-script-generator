@@ -4,9 +4,10 @@ from openai import OpenAI
 import os
 
 app = Flask(__name__)
-CORS(app)
 
-# Create OpenAI client (uses environment variable automatically)
+# 🔥 FIX CORS PROPERLY
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 @app.route("/generate", methods=["POST"])
@@ -24,7 +25,6 @@ Create a YouTube video script.
 Topic: {topic}
 
 Format:
-
 Title:
 Hook:
 Intro:
@@ -38,7 +38,7 @@ Make it engaging and simple.
 
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}]
         )
 
