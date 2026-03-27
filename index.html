@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Script Generator</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 10px;
+            width: 500px;
+            margin: auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #22c55e;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        pre {
+            text-align: left;
+            background: #020617;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🚀 AI Script Generator</h1>
+
+    <input id="topic" placeholder="Enter topic..." />
+    <br>
+    <button onclick="generate()">Generate Script</button>
+
+    <pre id="result"></pre>
+</div>
+
+<script>
+async function generate(){
+    let topic = document.getElementById("topic").value;
+
+    document.getElementById("result").innerText = "Generating... ⏳";
+
+    let res = await fetch("http://127.0.0.1:5000/generate", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({topic})
+    });
+
+    let data = await res.json();
+
+    document.getElementById("result").innerText = data.script;
+}
+</script>
+
+</body>
+</html>
