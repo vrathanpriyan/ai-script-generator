@@ -5,13 +5,16 @@ import os
 
 app = Flask(__name__)
 
-# 🔥 FIX CORS PROPERLY
-CORS(app, resources={r"/*": {"origins": "*"}})
+# 🔥 STRONG CORS FIX (handles preflight)
+CORS(app, supports_credentials=True)
 
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-@app.route("/generate", methods=["POST"])
+@app.route("/generate", methods=["POST", "OPTIONS"])
 def generate():
+    if request.method == "OPTIONS":
+        return jsonify({"message": "OK"}), 200
+
     data = request.json
 
     if not data:
