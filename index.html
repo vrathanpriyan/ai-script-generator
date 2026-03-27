@@ -72,7 +72,7 @@ async function generate(){
 
     document.getElementById("result").innerText = "Generating... ⏳";
 
-    let res = await fetch("https://ai-script-generator-ti9m.onrender.com/generate", {
+    let res = await fetch("https://ai-script-generator-1.onrender.com/generate", {
         method: "POST",
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify({topic})

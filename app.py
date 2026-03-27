@@ -5,11 +5,15 @@ import os
 
 app = Flask(__name__)
 
-# ✅ Proper CORS (single line only)
-CORS(app)
+# ✅ Strong CORS (fixes everything)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
-# ✅ OpenAI client
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+# ✅ Test route (VERY IMPORTANT)
+@app.route("/")
+def home():
+    return "API is running 🚀"
 
 @app.route("/generate", methods=["POST"])
 def generate():
